@@ -5,6 +5,7 @@ import "fmt"
 const STATUS_SUCCESSFUL = "successful"
 const STATUS_PENDING = "pending"
 const STATUS_FAILED = "failed"
+const STATUS_MATCH_FAILED = "matchFailed"
 
 func GetMarketOrderbookSnapshotV2Key(marketID string) string {
 	return fmt.Sprintf("HYDRO_MARKET_ORDERBOOK_SNAPSHOT_V2:%s", marketID)
