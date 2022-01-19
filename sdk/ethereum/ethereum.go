@@ -346,6 +346,20 @@ func (e *Ethereum) GetHotFeeDiscount(address string) decimal.Decimal {
 	return utils.StringToDecimal(res).Div(decimal.New(1, 2))
 }
 
+/// 获取匹配结果
+func (e * Ethereum) GetOrderMatchCheckResult(from string, data string) (bool, error) {
+	res, err := e.client.EthCall(ethrpc.T{
+		To:   e.hybridExAddr,
+		From: from,
+		Data: data,
+	}, "latest")
+
+	if err != nil {
+		return false, err
+	}
+	return (!utils.StringToDecimal(res).IsZero()), nil
+}
+
 func (e *Ethereum) IsValidSignature(address string, message string, signature string) (bool, error) {
 	if len(address) != 42 {
 		return false, errors.New("address must be 42 size long")

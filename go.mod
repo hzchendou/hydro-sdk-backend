@@ -1,4 +1,4 @@
-module github.com/hzchendou/hydro-sdk-backend
+module github.com/HydroProtocol/hydro-sdk-backend
 
 require (
 	github.com/airbrake/gobrake v2.0.9+incompatible // indirect

@@ -63,23 +63,34 @@ func (*EthereumHydroProtocol) GetOrderHash(order *sdk.Order) []byte {
 		),
 	)
 }
-func (*EthereumHydroProtocol) GetMatchOrderCallData(takerOrder *sdk.Order, makerOrders []*sdk.Order, baseTokenFilledAmounts []*big.Int) []byte {
+
+
+func (*EthereumHydroProtocol) GetMatchOrderCallData(takerOrder *sdk.Order, makerOrders []*sdk.Order, baseTokenFilledAmounts []*big.Int, gasUsed *big.Int, isTransaction bool) []byte {
 	var buf bytes.Buffer
 
 	//buf.Write([]byte{'\x8d', '\x10', '\x88', '\x3d'}) // function id v1.0
-	buf.Write([]byte{'\x88', '\x4d', '\xad', '\x2e'}) // function id v1.1
+	if isTransaction {
+		/// 08 47 29 a3
+		buf.Write([]byte{'\x08', '\x47', '\x29', '\xa3'}) // matchOrders
+	} else {
+		/// ed 23 01 64
+		buf.Write([]byte{'\xed', '\x23', '\x01', '\x64'}) // isOrderMatched
+	}
+
 	buf.Write(getLightOrderBytesFromOrder(takerOrder))
 
 	// offset of makerOrders
-	buf.Write(uint64ToPaddingBytes(uint64(13*32), 32))
+	buf.Write(uint64ToPaddingBytes(uint64(14*32), 32))
 	// offset of fillAmounts
-	buf.Write(uint64ToPaddingBytes(uint64((14+len(makerOrders)*8)*32), 32))
+	buf.Write(uint64ToPaddingBytes(uint64((15+len(makerOrders)*8)*32), 32))
 
 	buf.Write(types.HexToHash(takerOrder.BaseTokenAddress).Bytes())
 	buf.Write(types.HexToHash(takerOrder.QuoteTokenAddress).Bytes())
 
 	relayerAdx := types.HexToAddress(strings.Trim(takerOrder.Relayer, "0x"))
 	buf.Write(utils.LeftPadBytes(relayerAdx.Bytes(), 32))
+	// gas Used
+	buf.Write(types.BytesToHash(gasUsed.Bytes()).Bytes())
 
 	// makerCount
 	buf.Write(uint64ToPaddingBytes(uint64(len(makerOrders)), 32))

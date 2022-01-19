@@ -60,6 +60,7 @@ const (
 	EventConfirmTransaction = "EVENT/EVENT_CONFIRM_TRANSACTION"
 	EventOpenMarket         = "EVENT/EVENT_OPEN_MARKET"
 	EventCloseMarket        = "EVENT/EVENT_CLOSE_MARKET"
+	EventMatchErrorOrder    = "EVENT/EVENT_MATCH_ERROR_ORDER"
 )
 
 type Event struct {
@@ -82,6 +83,12 @@ type CancelOrderEvent struct {
 type ConfirmTransactionEvent struct {
 	Event
 	Hash      string `json:"hash"`
+	Status    string `json:"status"`
+	Timestamp uint64 `json:"timestamp"`
+}
+
+type MatchErrorOrderEvent struct {
+	Event
 	Status    string `json:"status"`
 	Timestamp uint64 `json:"timestamp"`
 }
