@@ -15,6 +15,8 @@ const WsTypeLockedBalanceChange = "lockedBalanceChange"
 
 const WsTypeNewMarketTrade = "newMarketTrade"
 
+const WsTypeFailMarketTrade = "failMarketTrade"
+
 //const MessageTypeAccount = "account"
 //const MessageTypeMarket = "market"
 
@@ -48,6 +50,11 @@ type WebsocketTradeChangePayload struct {
 }
 
 type WebsocketMarketNewMarketTradePayload struct {
+	Type  string      `json:"type"`
+	Trade interface{} `json:"trade"`
+}
+
+type WebsocketMarketFailMarketTradePayload struct {
 	Type  string      `json:"type"`
 	Trade interface{} `json:"trade"`
 }
@@ -89,8 +96,9 @@ type ConfirmTransactionEvent struct {
 
 type MatchErrorOrderEvent struct {
 	Event
-	Status    string `json:"status"`
-	Timestamp uint64 `json:"timestamp"`
+	TransactionID int64  `json:"transactionID"`
+	Status        string `json:"status"`
+	Timestamp     uint64 `json:"timestamp"`
 }
 
 // channel

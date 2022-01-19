@@ -13,14 +13,16 @@ type Launcher struct {
 	GasPriceDecider GasPriceDecider
 	SignService     ISignService
 	BlockChain      sdk.BlockChain
+	EventQueue      common.IQueue
 }
 
-func NewLauncher(ctx context.Context, sign ISignService, hydro sdk.Hydro, gasPriceDecider GasPriceDecider) *Launcher {
+func NewLauncher(ctx context.Context, sign ISignService, hydro sdk.Hydro, gasPriceDecider GasPriceDecider, eventQueue common.IQueue) *Launcher {
 	return &Launcher{
 		Ctx:             ctx,
 		SignService:     sign,
 		BlockChain:      hydro,
 		GasPriceDecider: gasPriceDecider,
+		EventQueue:      eventQueue,
 	}
 }
 

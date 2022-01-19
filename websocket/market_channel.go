@@ -43,6 +43,10 @@ func (c *marketChannel) handleMessage(msg *common.WebSocketMessage) {
 		var p common.WebsocketMarketNewMarketTradePayload
 		_ = json.Unmarshal(bts, &p)
 		messageToBeSent = &p
+	case common.WsTypeFailMarketTrade:
+		var p common.WebsocketMarketFailMarketTradePayload
+		_ = json.Unmarshal(bts, &p)
+		messageToBeSent = &p
 	default:
 		var p common.WebsocketMarketOrderChangePayload
 		_ = json.Unmarshal(bts, &p)
