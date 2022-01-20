@@ -64,18 +64,11 @@ func (*EthereumHydroProtocol) GetOrderHash(order *sdk.Order) []byte {
 	)
 }
 
-
-func (*EthereumHydroProtocol) GetMatchOrderCallData(takerOrder *sdk.Order, makerOrders []*sdk.Order, baseTokenFilledAmounts []*big.Int, gasUsed *big.Int, isTransaction bool) []byte {
+func (*EthereumHydroProtocol) GetMatchOrderCallData(takerOrder *sdk.Order, makerOrders []*sdk.Order, baseTokenFilledAmounts []*big.Int, gasUsed *big.Int) []byte {
 	var buf bytes.Buffer
 
 	//buf.Write([]byte{'\x8d', '\x10', '\x88', '\x3d'}) // function id v1.0
-	if isTransaction {
-		/// 08 47 29 a3
-		buf.Write([]byte{'\x08', '\x47', '\x29', '\xa3'}) // matchOrders
-	} else {
-		/// ed 23 01 64
-		buf.Write([]byte{'\xed', '\x23', '\x01', '\x64'}) // isOrderMatched
-	}
+	buf.Write([]byte{'\x08', '\x47', '\x29', '\xa3'}) // matchOrders
 
 	buf.Write(getLightOrderBytesFromOrder(takerOrder))
 

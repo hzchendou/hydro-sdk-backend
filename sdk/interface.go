@@ -28,7 +28,7 @@ type BlockChain interface {
 type HydroProtocol interface {
 	GenerateOrderData(version, expiredAtSeconds, salt int64, asMakerFeeRate, asTakerFeeRate, makerRebateRate decimal.Decimal, isSell, isMarket, isMakerOnly bool) string
 	GetOrderHash(*Order) []byte
-	GetMatchOrderCallData(*Order, []*Order, []*big.Int, *big.Int, bool) []byte
+	GetMatchOrderCallData(*Order, []*Order, []*big.Int, *big.Int) []byte
 
 	IsValidOrderSignature(address string, orderID string, signature string) bool
 }

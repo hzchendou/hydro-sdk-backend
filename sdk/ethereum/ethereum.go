@@ -103,7 +103,7 @@ type EthereumTransactionReceipt struct {
 }
 
 func (r *EthereumTransactionReceipt) GetLogs() (rst []sdk.IReceiptLog) {
-	for i:= range r.Logs {
+	for i := range r.Logs {
 		l := ReceiptLog{&r.Logs[i]}
 		rst = append(rst, l)
 	}
@@ -347,7 +347,7 @@ func (e *Ethereum) GetHotFeeDiscount(address string) decimal.Decimal {
 }
 
 /// 获取匹配结果
-func (e * Ethereum) GetOrderMatchCheckResult(from string, data string) (bool, error) {
+func (e *Ethereum) GetOrderMatchCheckResult(from string, data string) (bool, error) {
 	res, err := e.client.EthCall(ethrpc.T{
 		To:   e.hybridExAddr,
 		From: from,
@@ -357,7 +357,7 @@ func (e * Ethereum) GetOrderMatchCheckResult(from string, data string) (bool, er
 	if err != nil {
 		return false, err
 	}
-	return (!utils.StringToDecimal(res).IsZero()), nil
+	return utils.StringToDecimal(res).IsPositive(), nil
 }
 
 func (e *Ethereum) IsValidSignature(address string, message string, signature string) (bool, error) {

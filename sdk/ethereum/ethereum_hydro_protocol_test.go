@@ -222,7 +222,7 @@ func (suite *hydroTestSuite) TestGetMatchOrdersDataHex() {
 	baseTokenFilledAmt = append(baseTokenFilledAmt, utils.DecimalToBigInt(decimal.New(1, 18)))
 
 	ep := &EthereumHydroProtocol{}
-	res := utils.Bytes2HexP(ep.GetMatchOrderCallData(takerOrder, makerOrders, baseTokenFilledAmt))
+	res := utils.Bytes2HexP(ep.GetMatchOrderCallData(takerOrder, makerOrders, baseTokenFilledAmt, big.NewInt(300000)))
 	suite.Equal(expectedResult, res)
 }
 
