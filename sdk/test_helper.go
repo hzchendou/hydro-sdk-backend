@@ -99,8 +99,7 @@ func (m *MockHydroProtocol) GetOrderHash(order *Order) []byte {
 	return args.Get(0).([]byte)
 }
 
-func (m *MockHydroProtocol) GetMatchOrderCallData(takerOrder *Order, makerOrders []*Order, baseTokenFilledAmounts []*big.Int, gasUsed *big.Int, isTransaction bool) []byte {
-	args := m.Called(takerOrder, makerOrders, baseTokenFilledAmounts, gasUsed, isTransaction)
+func (m *MockHydroProtocol) GetMatchOrderCallData(takerOrder *Order, makerOrders []*Order, baseTokenFilledAmounts []*big.Int, gasUsed *big.Int) []byte {
+	args := m.Called(takerOrder, makerOrders, baseTokenFilledAmounts, gasUsed)
 	return args.Get(0).([]byte)
 }
-
